@@ -14,7 +14,7 @@ import { RouterLink, RouterView } from "vue-router";
 
         <div>
           <li
-            class="font-sans block mt-4 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700"
+            class="font-sans block lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700"
           >
             <RouterLink
               to="/cart/summary"
