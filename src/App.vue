@@ -3,13 +3,13 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <div class="relative bg-white">
+  <header class="relative bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div
         class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"
       >
         <div class="flex justify-start lg:w-0 lg:flex-1">
-          <a href="#"> KMUTT Shop </a>
+          <RouterLink to="/"> KMUTT Shop </RouterLink>
         </div>
 
         <div>
@@ -41,11 +41,11 @@ import { RouterLink, RouterView } from "vue-router";
         </div>
       </div>
     </div>
-  </div>
+  </header>
 
-  <div class="max-w-2xl mx-auto py-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+  <main class="max-w-2xl mx-auto py-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
     <RouterView />
-  </div>
+  </main>
 </template>
 
 <style scoped></style>
