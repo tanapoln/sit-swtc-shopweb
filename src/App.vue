@@ -1,29 +1,23 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div class="relative bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div
+        class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"
+      >
+        <div class="flex justify-start lg:w-0 lg:flex-1">
+          <a href="#"> KMUTT Shop </a>
+        </div>
+      </div>
     </div>
-  </header>
+  </div>
 
-  <RouterView />
+  <div class="max-w-2xl mx-auto py-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>
