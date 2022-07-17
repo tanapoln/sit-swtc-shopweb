@@ -14,7 +14,7 @@ export function useApi(factory, handleResponse) {
       const valueResponse = await handleResponse(response);
 
       if (String(response.status)[0] !== "2") {
-        throw response;
+        throw valueResponse;
       }
       result.value = valueResponse;
       return valueResponse;

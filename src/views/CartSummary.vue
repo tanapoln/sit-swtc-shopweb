@@ -1,9 +1,15 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import { useApi } from "@/composables/api";
-import { getCartSummary } from "@/services/cart";
+import { getCartSummary, applyCoupon } from "@/services/cart";
 import { store } from "@/store";
 import { decimalFormat } from "@/tools/decimalFormat";
+
+const userCoupon = ref("");
+const coupon = reactive({
+  valid: false,
+  description: "",
+});
 
 const cartSummary = useApi(
   (cartId) => getCartSummary({ cartId }),
@@ -12,6 +18,21 @@ const cartSummary = useApi(
 onMounted(() => {
   cartSummary.execute(store.cartId);
 });
+
+async function applyForCoupon() {
+  const couponApply = useApi(
+    (coupon) => applyCoupon({ cartId: store.cartId, coupon }),
+    (r) => r.json()
+  );
+  await couponApply.execute(userCoupon.value);
+  if (couponApply.result.value !== null) {
+    coupon.description = couponApply.result.value.description;
+    coupon.valid = true;
+  } else if (couponApply.error.value.code === "400") {
+    coupon.description = couponApply.error.value.message;
+    coupon.valid = false;
+  }
+}
 </script>
 
 <template>
@@ -109,7 +130,11 @@ onMounted(() => {
             </div>
             <div class="p-2 lg:w-1/2">
               <div class="">
-                <form action="" method="POST">
+                <form
+                  action=""
+                  method="POST"
+                  @submit.prevent="applyForCoupon()"
+                >
                   <div
                     class="flex items-center w-full h-12 pl-3 bg-white bg-gray-100 border rounded-full"
                   >
@@ -118,7 +143,7 @@ onMounted(() => {
                       name="code"
                       id="coupon"
                       placeholder="Apply coupon"
-                      value="90off"
+                      v-model="userCoupon"
                       class="w-full bg-gray-100 outline-none appearance-none focus:outline-none active:outline-none"
                     />
                     <button
@@ -147,9 +172,11 @@ onMounted(() => {
           </div>
           <div
             class="p-4 mt-1 rounded-md md:mx-4 border-dashed border-2 border-gray-500 pl-6"
+            :class="{ 'bg-cyan-50': coupon.valid, 'bg-red-50': !coupon.valid }"
+            v-if="coupon.description"
           >
             <p>Description</p>
-            <p>Get ฿10 discount when you order ฿60 minimum</p>
+            <p>{{ coupon.description }}</p>
           </div>
         </div>
       </div>

@@ -12,5 +12,13 @@ export function getCartSummary({ cartId }) {
   return {
     url: BASE_URL + `/cart/summary?=${cartId}`,
     method: "GET",
-  }
+  };
+}
+
+export function applyCoupon({ cartId, coupon }) {
+  return {
+    url: BASE_URL + `/cart/applyCoupon`,
+    method: "POST",
+    body: JSON.stringify({ cartId, coupon }),
+  };
 }
