@@ -1,11 +1,10 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import { RouterLink, RouterView } from "vue-router";
-
-const numOfItems = ref(0);
+import { store, initCart } from "@/store";
 
 onMounted(() => {
-  numOfItems.value = Number(sessionStorage.getItem("numberOfItems") ?? 0);
+  initCart();
 });
 </script>
 
@@ -15,7 +14,7 @@ onMounted(() => {
       <div
         class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"
       >
-        <div class="flex justify-start lg:w-0 lg:flex-1">
+        <div class="flex justify-start lg:w-0 flex-1">
           <RouterLink to="/"> KMUTT Shop </RouterLink>
         </div>
 
@@ -41,7 +40,7 @@ onMounted(() => {
                 <span
                   class="cart-item-quantity px-1 absolute right-0 top-0 cart-badge rounded-full bg-red-600 h-4 top right p-0 m-0 text-white font-mono text-sm leading-tight text-center"
                 >
-                  {{ numOfItems }}
+                  {{ store.numberOfItems }}
                 </span>
               </div>
             </RouterLink>
