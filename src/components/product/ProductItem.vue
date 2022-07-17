@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  item: Object,
+});
+</script>
 
 <template>
   <div class="group relative">
@@ -6,8 +10,8 @@
       class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none"
     >
       <img
-        src="https://placekitten.com/240/320"
-        alt="Front of men&#039;s Basic Tee in black."
+        :src="props.item.imageUrl"
+        :alt="props.item.name"
         class="w-full h-full object-center object-cover lg:w-full lg:h-full"
       />
     </div>
@@ -16,11 +20,11 @@
         <h3 class="text-sm text-gray-700">
           <a href="#">
             <span aria-hidden="true" class="inset-0"></span>
-            Product name
+            {{ props.item.name }}
           </a>
         </h3>
       </div>
-      <p class="text-sm font-medium text-gray-900">฿35</p>
+      <p class="text-sm font-medium text-gray-900">฿{{ props.item.price }}</p>
     </div>
     <div class="flex space-x-2 justify-center mt-2">
       <button
