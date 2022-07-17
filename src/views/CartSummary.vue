@@ -40,6 +40,7 @@ async function applyForCoupon() {
     <div
       class="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5"
     >
+      <h1 class="font-bold text-2xl md:ml-4 mb-4">Cart Summary</h1>
       <div
         v-if="cartSummary.error.value"
         class="flex items-center justify-center h-32"

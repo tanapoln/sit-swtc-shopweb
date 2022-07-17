@@ -14,6 +14,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <h1 class="font-bold text-2xl md:ml-4 mt-6 mb-4">Products</h1>
   <div v-if="productList.error.value" class="text-center mt-6">
     Could not load content, please try again
   </div>
