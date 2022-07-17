@@ -13,6 +13,9 @@ export function useApi(factory, handleResponse) {
       const response = await fetch(url, request);
       const valueResponse = await handleResponse(response);
 
+      if (String(response.status)[0] !== "2") {
+        throw response;
+      }
       result.value = valueResponse;
       return valueResponse;
     } catch (e) {

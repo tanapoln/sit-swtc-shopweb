@@ -1,10 +1,31 @@
+<script setup>
+import { onMounted } from "vue";
+import { useApi } from "@/composables/api";
+import { getCartSummary } from "@/services/cart";
+import { store } from "@/store";
+import { decimalFormat } from "@/tools/decimalFormat";
+
+const cartSummary = useApi(
+  (cartId) => getCartSummary({ cartId }),
+  (r) => r.json()
+);
+onMounted(() => {
+  cartSummary.execute(store.cartId);
+});
+</script>
+
 <template>
-  <!-- component -->
   <div class="flex justify-center my-6">
     <div
       class="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5"
     >
-      <div class="flex-1">
+      <div
+        v-if="cartSummary.error.value"
+        class="flex items-center justify-center h-32"
+      >
+        Could not load content, please try again
+      </div>
+      <div v-else-if="cartSummary.result.value" class="flex-1">
         <table class="w-full text-sm lg:text-base" cellspacing="0">
           <thead>
             <tr class="h-12">
@@ -18,10 +39,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr
+              v-for="(item, index) in cartSummary.result.value.lineItems"
+              :key="index"
+            >
               <td>
                 <a href="#">
-                  <p class="mb-2 md:ml-4">Earphone</p>
+                  <p class="mb-2 md:ml-4">{{ item.name }}</p>
                 </a>
               </td>
               <td class="justify-center md:justify-end md:flex">
@@ -29,7 +53,7 @@
                   <div class="relative flex flex-row w-full h-8">
                     <input
                       type="number"
-                      value="2"
+                      :value="item.quantity"
                       readonly
                       class="w-full font-semibold text-center text-gray-700 bg-gray-200 outline-none focus:outline-none hover:text-black focus:text-black"
                     />
@@ -37,10 +61,14 @@
                 </div>
               </td>
               <td class="hidden text-right md:table-cell">
-                <span class="text-sm lg:text-base font-medium">฿10.00</span>
+                <span class="text-sm lg:text-base font-medium"
+                  >฿{{ decimalFormat(item.unitPrice) }}</span
+                >
               </td>
               <td class="text-right">
-                <span class="text-sm lg:text-base font-medium">฿20.00</span>
+                <span class="text-sm lg:text-base font-medium"
+                  >฿{{ decimalFormat(item.quantity * item.unitPrice) }}</span
+                >
               </td>
             </tr>
           </tbody>
@@ -51,13 +79,17 @@
             <div class="lg:px-2 lg:py-2 md:ml-2 text-center text-gray-800">
               Subtotal
             </div>
-            <div class="lg:py-2 text-center text-gray-900">฿20</div>
+            <div class="lg:py-2 text-center text-gray-900">
+              ฿{{ decimalFormat(cartSummary.result.value.subtotal) }}
+            </div>
           </div>
           <div class="flex justify-between">
             <div class="lg:px-2 lg:py-2 md:ml-2 text-center text-gray-800">
-              Discount: coupon TGIF20
+              Discount: {{ cartSummary.result.value.discountName }}
             </div>
-            <div class="lg:py-2 text-center text-gray-900">-฿10</div>
+            <div class="lg:py-2 text-center text-gray-900">
+              -฿{{ decimalFormat(cartSummary.result.value.discountAmount) }}
+            </div>
           </div>
           <div class="flex justify-between">
             <div
@@ -65,7 +97,9 @@
             >
               Total
             </div>
-            <div class="lg:py-2 text-center font-bold text-gray-900">฿10</div>
+            <div class="lg:py-2 text-center font-bold text-gray-900">
+              ฿{{ decimalFormat(cartSummary.result.value.total) }}
+            </div>
           </div>
         </div>
         <div class="my-4 mt-6 -mx-2">
@@ -119,6 +153,7 @@
           </div>
         </div>
       </div>
+      <div v-else class="flex items-center justify-center h-32">Loading...</div>
     </div>
   </div>
 </template>
