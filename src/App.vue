@@ -1,5 +1,12 @@
 <script setup>
+import { ref, onMounted } from "vue";
 import { RouterLink, RouterView } from "vue-router";
+
+const numOfItems = ref(0);
+
+onMounted(() => {
+  numOfItems.value = Number(sessionStorage.getItem("numberOfItems") ?? 0);
+});
 </script>
 
 <template>
@@ -32,8 +39,9 @@ import { RouterLink, RouterView } from "vue-router";
                   />
                 </svg>
                 <span
-                  class="absolute right-0 top-0 cart-badge rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm leading-tight text-center"
-                  >5
+                  class="cart-item-quantity px-1 absolute right-0 top-0 cart-badge rounded-full bg-red-600 h-4 top right p-0 m-0 text-white font-mono text-sm leading-tight text-center"
+                >
+                  {{ numOfItems }}
                 </span>
               </div>
             </RouterLink>
