@@ -28,7 +28,7 @@ async function applyForCoupon() {
   if (couponApply.result.value !== null) {
     coupon.description = couponApply.result.value.description;
     coupon.valid = true;
-  } else if (couponApply.error.value.code === "400") {
+  } else if (String(couponApply.error.value.code) === "400") {
     coupon.description = couponApply.error.value.message;
     coupon.valid = false;
   }
