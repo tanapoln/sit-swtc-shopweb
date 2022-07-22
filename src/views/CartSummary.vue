@@ -32,6 +32,7 @@ async function applyForCoupon() {
     coupon.description = couponApply.error.value.message;
     coupon.valid = false;
   }
+  cartSummary.execute(store.cartId);
 }
 </script>
 
