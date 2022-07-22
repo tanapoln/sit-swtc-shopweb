@@ -29,4 +29,15 @@ describe("Cart", () => {
           .should("have.text", " $42.57");
       });
   });
+  
+  it("Update product from one to two quantity", () => {
+    customer.visit("/");
+
+    customer.get(':nth-child(1) > .space-x-2 > [data-cy="product-item--add-to-cart"]').click()
+
+    customer.get(':nth-child(1) > .space-x-2 > [data-cy="product-item--add-to-cart"]').click()
+
+    customer.get('[data-cy="cart--number-of-items"]')
+      .should("have.text", "2");
+  });
 });
