@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted, ref, reactive } from "vue";
-import { useApi } from "@/composables/api";
-import { getCartSummary, applyCoupon } from "@/services/cart";
-import { store } from "@/store";
-import { decimalFormat } from "@/tools/decimalFormat";
+import {onMounted, reactive, ref} from "vue";
+import {useApi} from "@/composables/api";
+import {applyCoupon, getCartSummary} from "@/services/cart";
+import {store} from "@/store";
+import {decimalFormat} from "@/tools/decimalFormat";
 
 const userCoupon = ref("");
 const coupon = reactive({
@@ -12,8 +12,8 @@ const coupon = reactive({
 });
 
 const cartSummary = useApi(
-  (cartId) => getCartSummary({ cartId }),
-  (r) => r.json()
+    (cartId) => getCartSummary({cartId}),
+    (r) => r.json()
 );
 onMounted(() => {
   cartSummary.execute(store.cartId);
@@ -84,12 +84,12 @@ async function applyForCoupon() {
               </td>
               <td class="hidden text-right md:table-cell">
                 <span class="text-sm lg:text-base font-medium"
-                  >฿{{ decimalFormat(item.unitPrice) }}</span
+                >${{ decimalFormat(item.unitPrice) }}</span
                 >
               </td>
               <td class="text-right">
                 <span class="text-sm lg:text-base font-medium"
-                  >฿{{ decimalFormat(item.quantity * item.unitPrice) }}</span
+                >${{ decimalFormat(item.quantity * item.unitPrice) }}</span
                 >
               </td>
             </tr>
@@ -102,7 +102,7 @@ async function applyForCoupon() {
               Subtotal
             </div>
             <div class="lg:py-2 text-center text-gray-900">
-              ฿{{ decimalFormat(cartSummary.result.value.subtotal) }}
+              ${{ decimalFormat(cartSummary.result.value.subtotal) }}
             </div>
           </div>
           <div class="flex justify-between">
@@ -110,7 +110,7 @@ async function applyForCoupon() {
               Discount: {{ cartSummary.result.value.discountName }}
             </div>
             <div class="lg:py-2 text-center text-gray-900">
-              -฿{{ decimalFormat(cartSummary.result.value.discountAmount) }}
+              -${{ decimalFormat(cartSummary.result.value.discountAmount) }}
             </div>
           </div>
           <div class="flex justify-between">
@@ -120,7 +120,7 @@ async function applyForCoupon() {
               Total
             </div>
             <div class="lg:py-2 text-center font-bold text-gray-900">
-              ฿{{ decimalFormat(cartSummary.result.value.total) }}
+              ${{ decimalFormat(cartSummary.result.value.total) }}
             </div>
           </div>
         </div>

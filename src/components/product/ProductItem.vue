@@ -1,8 +1,8 @@
 <script setup>
-import { setNumberOfItems } from "@/store";
-import { addProductToCart } from "@/services/cart";
-import { useApi } from "@/composables/api";
-import { store } from "../../store";
+import {setNumberOfItems} from "@/store";
+import {addProductToCart} from "@/services/cart";
+import {useApi} from "@/composables/api";
+import {store} from "../../store";
 
 const props = defineProps({
   item: Object,
@@ -11,8 +11,8 @@ const props = defineProps({
 async function addToCart() {
   const productId = props.item.id;
   const addToCartApi = useApi(
-    () => addProductToCart({ cartId: store.cartId, productId }),
-    (r) => r.json()
+      () => addProductToCart({cartId: store.cartId, productId}),
+      (r) => r.json()
   );
   await addToCartApi.execute();
   if (addToCartApi.result.value !== null) {
@@ -41,7 +41,7 @@ async function addToCart() {
           </a>
         </h3>
       </div>
-      <p class="text-sm font-medium text-gray-900">฿{{ props.item.price }}</p>
+      <p class="text-sm font-medium text-gray-900">${{ props.item.price }}</p>
     </div>
     <div class="flex space-x-2 justify-center mt-2">
       <button
