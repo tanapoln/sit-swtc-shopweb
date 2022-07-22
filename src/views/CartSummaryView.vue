@@ -1,9 +1,9 @@
 <script setup>
-import {onMounted, reactive, ref} from "vue";
-import {useApi} from "@/composables/api";
-import {applyCoupon, getCartSummary} from "@/services/cart";
-import {store} from "@/store";
-import {decimalFormat} from "@/tools/decimalFormat";
+import { onMounted, reactive, ref } from "vue";
+import { useApi } from "@/composables/api";
+import { applyCoupon, getCartSummary } from "@/services/cart";
+import { store } from "@/store";
+import { decimalFormat } from "@/tools/decimalFormat";
 
 const userCoupon = ref("");
 const coupon = reactive({
@@ -12,8 +12,8 @@ const coupon = reactive({
 });
 
 const cartSummary = useApi(
-    (cartId) => getCartSummary({cartId}),
-    (r) => r.json()
+  (cartId) => getCartSummary({ cartId }),
+  (r) => r.json()
 );
 onMounted(() => {
   cartSummary.execute(store.cartId);
@@ -85,12 +85,12 @@ async function applyForCoupon() {
               </td>
               <td class="hidden text-right md:table-cell">
                 <span class="text-sm lg:text-base font-medium"
-                >${{ decimalFormat(item.unitPrice) }}</span
+                  >${{ decimalFormat(item.unitPrice) }}</span
                 >
               </td>
               <td class="text-right">
                 <span class="text-sm lg:text-base font-medium"
-                >${{ decimalFormat(item.quantity * item.unitPrice) }}</span
+                  >${{ decimalFormat(item.quantity * item.unitPrice) }}</span
                 >
               </td>
             </tr>

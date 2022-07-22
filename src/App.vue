@@ -38,7 +38,8 @@ onMounted(() => {
                   />
                 </svg>
                 <span
-                  class="cart-item-quantity px-1 absolute right-0 top-0 cart-badge rounded-full bg-red-600 h-4 top right p-0 m-0 text-white font-mono text-sm leading-tight text-center"
+                  data-cy="cart--number-of-items"
+                  class="px-1 absolute right-0 top-0 cart-badge rounded-full bg-red-600 h-4 top right p-0 m-0 text-white font-mono text-sm leading-tight text-center"
                 >
                   {{ store.numberOfItems }}
                 </span>
