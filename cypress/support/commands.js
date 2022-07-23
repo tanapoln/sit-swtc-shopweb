@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+/* global Cypress, cy */
+
+Cypress.Commands.add("addProductToCart", ({ quantities }) => {
+  cy.visit("/");
+
+  for (let index = 0; index < quantities; index++) {
+    cy.get(
+      "[data-cy='product-item']:nth-child(1) [data-cy='product-item--add-to-cart']"
+    ).click();
+  }
+});
