@@ -6,6 +6,10 @@ import { store, initCart } from "@/store";
 onMounted(() => {
   initCart();
 });
+
+function logAppVersion() {
+  console.log("v1.0.0");
+}
 </script>
 
 <template>
@@ -14,7 +18,10 @@ onMounted(() => {
       <div
         class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"
       >
-        <div class="flex justify-start lg:w-0 flex-1">
+        <div
+          class="flex justify-start lg:w-0 flex-1"
+          @dblclick="logAppVersion()"
+        >
           <RouterLink to="/"> KMUTT Shop </RouterLink>
         </div>
 
