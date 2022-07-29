@@ -40,3 +40,27 @@ Cypress.Commands.add("addProductToCart", (productName) => {
     .find("button")
     .click();
 });
+
+Cypress.Commands.add("shouldHaveLineItem", ({ at, productName, quantity }) => {
+  cy.get('[data-cy="cart-summary-item--name"]')
+    .eq(at - 1)
+    .shouldHaveText(productName);
+  cy.get('[data-cy="cart-summary-item--quantity"]')
+    .eq(at - 1)
+    .should("have.value", quantity);
+});
+
+Cypress.Commands.add(
+  "shouldHavePriceSummary",
+  ({ subtotal, discount, total }) => {
+    cy.get('[data-cy="subtotal"]').shouldHaveText(subtotal);
+    cy.get('[data-cy="discount-amount"]').shouldHaveText(discount);
+    cy.get('[data-cy="total"]').shouldHaveText(total);
+  }
+);
+
+Cypress.Commands.add("waitForApi", ({ method, path }) => {
+  const uniqueApiName = method + path;
+  cy.intercept(method, path).as(uniqueApiName);
+  cy.wait("@" + uniqueApiName);
+});
