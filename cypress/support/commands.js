@@ -50,6 +50,17 @@ Cypress.Commands.add("shouldHaveLineItem", ({ at, productName, quantity }) => {
     .should("have.value", quantity);
 });
 
+Cypress.Commands.add("shouldHaveLineItems", (lineItems) => {
+  cy.get("tbody > tr").should("have.length", lineItems.length);
+  lineItems.forEach((item, index) => {
+    cy.shouldHaveLineItem({
+      at: index + 1,
+      productName: item.productName,
+      quantity: item.quantity,
+    });
+  });
+});
+
 Cypress.Commands.add(
   "shouldHavePriceSummary",
   ({ subtotal, discount, total }) => {
