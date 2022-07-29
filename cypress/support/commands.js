@@ -23,14 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-/* global Cypress, cy */
+// eslint-disable-next-line no-unused-vars
+/* global Cypress, expect, cy */
 
-Cypress.Commands.add("addProductToCart", ({ quantities }) => {
-  cy.visit("/");
-
-  for (let index = 0; index < quantities; index++) {
-    cy.get(
-      "[data-cy='product-item']:nth-child(1) [data-cy='product-item--add-to-cart']"
-    ).click();
+Cypress.Commands.add(
+  "shouldHaveText",
+  { prevSubject: true },
+  (subject, equalTo) => {
+    expect(subject.text().trim()).to.equal(equalTo);
   }
-});
+);
