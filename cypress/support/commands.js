@@ -33,3 +33,10 @@ Cypress.Commands.add(
     expect(subject.text().trim()).to.equal(equalTo);
   }
 );
+
+Cypress.Commands.add("addProductToCart", (productName) => {
+  cy.contains(productName)
+    .parents("[data-cy='product-item']")
+    .find("button")
+    .click();
+});
